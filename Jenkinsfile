@@ -12,7 +12,7 @@ pipeline
             }
             steps 
             {
-                sh 'whoami'
+                
                 sh 'docker ps'
                 }
             }
