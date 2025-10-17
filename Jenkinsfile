@@ -1,35 +1,29 @@
-pipeline 
-{
+pipeline {
     agent none
 
-    stages 
-    {
+    stages {
         stage('Frontend') {
-            agent{
+            agent {
                 docker {
                     image 'gayatri491/frontend_app3:latest'
-                    args '-u root:root -v /var/run/docker.sock:/var/run/docker.sock'
+                    args '-v /var/run/docker.sock:/var/run/docker.sock -u root:root'
                 }
             }
-            steps 
-            {
-                sh 'apt-get update && apt-get install -y docker.io'
+            steps {
                 sh 'docker ps'
-                }
             }
-        
+        }
+
         stage('Backend') {
-            agent{
+            agent {
                 docker {
                     image 'gayatri491/backend_app2:latest'
+                    args '-v /var/run/docker.sock:/var/run/docker.sock -u root:root'
                 }
             }
-            steps 
-            {
-                sh 'apt-get update && apt-get install -y docker.io'
+            steps {
                 sh 'docker ps'
-        }
             }
-             }
+        }
     }
-    
+}
