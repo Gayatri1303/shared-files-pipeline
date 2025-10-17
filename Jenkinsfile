@@ -6,7 +6,7 @@ pipeline
     {
         stage('Frontend') {
             agent{
-            docker{image "gayatri491/frontend_app3:latest"}
+            docker {image "gayatri491/frontend_app3:latest"}
             }
             steps 
             {
@@ -16,7 +16,7 @@ pipeline
         
         stage('Backend') {
             agent{
-                docker{image "gayatri491/backend_app2:latest"}
+                docker {image "gayatri491/backend_app2:latest"}
             }
             steps 
             {
