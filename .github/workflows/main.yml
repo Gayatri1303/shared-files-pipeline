@@ -1,5 +1,16 @@
-            - name: Test Hello vooloJoxoh3o
-  # You may pin to the exact commit or the version.
-  # uses: szksh-lab-2/hello-action-2@b8ff704aeaf6880542354c29ad758bd0cdc72234
-  uses: szksh-lab-2/hello-action-2@v0.0.2
-          
+name: Hello World
+
+on:
+  push:
+    branches:
+      - main  # Trigger only when pushing to main branch
+
+jobs:
+  say-hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Print Hello
+        run: echo "Hello"
