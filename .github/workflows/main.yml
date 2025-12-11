@@ -25,7 +25,6 @@ jobs:
         run: |
           CREDS=$(aws sts assume-role-with-web-identity \
             --role-arn "arn:aws:iam::174331605686:role/allow-ssmaccess_to_github_runners" \
-            --role-session-name "github-session" \
             --web-identity-token "${{ steps.token.outputs.token }}" \
             --duration-seconds 3600)
 
