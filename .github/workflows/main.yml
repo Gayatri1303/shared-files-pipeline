@@ -24,4 +24,5 @@ jobs:
         run: |
           aws ssm send-command \
             --instance-ids "i-07eb7aed4fc26e89a" \
-            --document-name "custom_doc"
+            --document-name "custom_doc" \
+            --document-version "2"
