@@ -20,7 +20,7 @@ jobs:
 
           echo "token=${TOKEN}" >> $GITHUB_OUTPUT
 
-      - name: Assume AWS Role
+      - name: assume role
         id: awscreds
         run: |
           CREDS=$(aws sts assume-role-with-web-identity \
@@ -28,6 +28,10 @@ jobs:
             --role-session-name "github-session" \
             --web-identity-token "${{ steps.token.outputs.token }}" \
             --duration-seconds 3600)
+
+          echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID" >> $GITHUB_ENV
+          echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY" >> $GITHUB_ENV
+          echo "AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN" >> $GITHUB_ENV
 
       - name: deploy on ec2
         run: |
