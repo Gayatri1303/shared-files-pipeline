@@ -21,12 +21,11 @@ jobs:
           echo "token=${TOKEN}" >> $GITHUB_OUTPUT
 
       - name: assume role
-        id: awscreds
-        run: |
-          CREDS=$(aws sts assume-role-with-web-identity \
-            --role-arn "arn:aws:iam::174331605686:role/allow-ssmaccess_to_github_runners" \
-            --web-identity-token "${{ steps.token.outputs.token }}" \
-            --duration-seconds 3600)
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::174331605686:role/allow-ssmaccess_to_github_runners
+          aws-region: ap-south-1
+
 
       - name: deploy on ec2
         run: |
