@@ -4,7 +4,8 @@ permissions:
   id-token: write
   contents: read
 
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
 
 jobs:
   deploy_on_aws:
@@ -12,22 +13,14 @@ jobs:
 
     steps:
 
-      - name: get token
-        id: token
-        run: |
-          TOKEN=$(curl -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
-            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com" | jq -r '.value')
-
-          echo "token=${TOKEN}" >> $GITHUB_OUTPUT
-
-      - name: assume role
-      - uses: aws-actions/configure-aws-credentials@v4
+      - name: Configure AWS Credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::174331605686:role/allow-ssmaccess_to_github_runners
+          role-session-name: github-actions
           aws-region: ap-south-1
 
-
-      - name: deploy on ec2
+      - name: Deploy to EC2 using SSM
         run: |
           aws ssm send-command \
             --instance-ids "i-07eb7aed4fc26e89a" \
